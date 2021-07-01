@@ -6,10 +6,16 @@ from tensorflow.keras import activations
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import Layer
 
+# def squash(x, axis=-1):
+#     s_squared_norm = K.sum(K.square(x), axis, keepdims=True) + K.epsilon()
+#     scale = K.sqrt(s_squared_norm)/ (0.5 + s_squared_norm)
+#     return scale * x
 def squash(x, axis=-1):
-    s_squared_norm = K.sum(K.square(x), axis, keepdims=True) + K.epsilon()
-    scale = K.sqrt(s_squared_norm)/ (0.5 + s_squared_norm)
-    return scale * x
+    s_squared_norm = K.sum(K.square(x), axis, keepdims=True) 
+    safe_norm = K.sqrt(s_squared_norm + K.epsilon())
+    squash_factor = s_squared_norm/(1. + s_squared_norm)
+    unit _vector = x/safe_norm
+    return squash_factor * unit_vector
 
 
 #define our own softmax function instead of K.softmax
