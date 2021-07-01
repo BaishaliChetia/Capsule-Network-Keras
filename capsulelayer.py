@@ -44,6 +44,7 @@ def margin_loss(y_true, y_pred):
 
 #A Capsule Implement with Pure Keras
 class Capsule(Layer):
+    print("I see you")
     def __init__(self, num_capsule, dim_capsule, routings=3, share_weights=True, activation='squash', **kwargs):
         super(Capsule, self).__init__(**kwargs)
         self.num_capsule = num_capsule
